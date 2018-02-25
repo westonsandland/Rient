@@ -13,7 +13,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     let locationObj = CLLocationManager()
     @IBOutlet weak var Tower: UILabel!
-    
+    @IBOutlet weak var LatitudeFrom: UILabel!
+    @IBOutlet weak var LongitudeFrom: UILabel!
+
     func enableLocationServices() {
         locationObj.delegate = self
 
@@ -30,6 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         case .authorizedWhenInUse, .authorizedAlways:
             // Enable basic location features
+            locationObj.startUpdatingLocation()
             setRelativePosition()
             break
         }
@@ -51,10 +54,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let fromTowerTuple = getLatitudeAndLongitudeFromTower()
+        LatitudeFrom.text = String(describing: fromTowerTuple.latitude)
+        LongitudeFrom.text = String(describing: fromTowerTuple.longitude)
+    }
+    
     func getLatitudeAndLongitudeFromTower() -> (latitude: Double, longitude: Double)
     {
         let currentLatitude : Double = (locationObj.location?.coordinate.latitude)!
         let currentLongitude : Double = (locationObj.location?.coordinate.longitude)!
+        print("method ran")
+        print("current latitude is "+String(currentLatitude))
+        print("current longitude is "+String(currentLongitude))
+        print("UT latitude is "+String(LocationConstants.Coordinates.towerLatitude))
+        print("UT longitude is "+String(LocationConstants.Coordinates.towerLongitude))
         return (LocationConstants.Coordinates.towerLatitude - currentLatitude,
                 LocationConstants.Coordinates.towerLongitude - currentLongitude)
     }
@@ -69,6 +83,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         //locationManager.requestAlwaysAuthorization()
+        LatitudeFrom.adjustsFontSizeToFitWidth = true
+        LongitudeFrom.adjustsFontSizeToFitWidth = true
         enableLocationServices()
         print(Tower.frame.origin.x)
         print(Tower.frame.origin.y)

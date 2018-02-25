@@ -13,7 +13,7 @@ struct LocationConstants
     struct Coordinates
     {
         static let towerLatitude : Double = 30.2862
-        static let towerLongitude : Double = 97.7394
+        static let towerLongitude : Double = -97.7394
     }
     
     

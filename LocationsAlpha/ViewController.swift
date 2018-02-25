@@ -9,20 +9,18 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
-    let TowerLatitude : Double = 30.2862
-    let TowerLongitude : Double = 97.7394
-    let locationManager = CLLocationManager()
+    let locationObj = CLLocationManager()
     @IBOutlet weak var Tower: UILabel!
     
     func enableLocationServices() {
-        locationManager.delegate = self as? CLLocationManagerDelegate
-        
+        locationObj.delegate = self
+
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             // Request when-in-use authorization initially
-            locationManager.requestWhenInUseAuthorization()
+            locationObj.requestWhenInUseAuthorization()
             break
             
         case .restricted, .denied:
@@ -53,10 +51,18 @@ class ViewController: UIViewController {
         }
     }
     
+    func getLatitudeAndLongitudeFromTower() -> (latitude: Double, longitude: Double)
+    {
+        let currentLatitude : Double = (locationObj.location?.coordinate.latitude)!
+        let currentLongitude : Double = (locationObj.location?.coordinate.longitude)!
+        return (LocationConstants.Coordinates.towerLatitude - currentLatitude,
+                LocationConstants.Coordinates.towerLongitude - currentLongitude)
+    }
+    
     func setRelativePosition()
     {
-        Tower.text = String(describing: locationManager.location?.coordinate.latitude)
-        Tower.text?.append(String(describing: locationManager.location?.coordinate.longitude))
+        Tower.text = String(describing: locationObj.location?.coordinate.latitude)
+        Tower.text?.append(String(describing: locationObj.location?.coordinate.longitude))
         Tower.frame.origin = CGPoint(x: 0.0, y: 0.0)
     }
     

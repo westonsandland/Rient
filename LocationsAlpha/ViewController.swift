@@ -14,6 +14,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let locationObj = CLLocationManager()
     @IBOutlet weak var LatitudeFrom: UILabel!
     @IBOutlet weak var LongitudeFrom: UILabel!
+    @IBOutlet weak var Pointer: UIImageView!
+    
     var currentAngle: Double = 0
     func enableLocationServices() {
         locationObj.delegate = self
@@ -78,7 +80,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let x = xyTuple.longitude
         let y = xyTuple.latitude
         let hypo = sqrt(pow(x, 2.0) + pow(y, 2.0))
-        let radianRotation = asin((y/x) / hypo)
+        let radianRotation : Double
+        if x < 0 && y < 0 {
+            radianRotation = acos(-x / hypo) + Double.pi
+        } else if x < 0
+        {
+            radianRotation = acos(x / hypo)
+        } else
+        {
+            radianRotation = asin(y / hypo)
+        }
+        Pointer.transform = Pointer.transform.rotated(by: CGFloat(radianRotation))
+        //rotate object by
     }
     
     func setRelativePosition()

@@ -17,6 +17,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var Pointer: UIImageView!
     
     var currentAngle: Double = 0
+    var correction: Double = 0
+    
     func enableLocationServices() {
         locationObj.delegate = self
 
@@ -34,6 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             // Enable basic location features
             locationObj.startUpdatingLocation()
+            locationObj.startUpdatingHeading()
             setRelativePosition()
             break
         }
@@ -60,6 +63,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         LatitudeFrom.text = String(describing: fromTowerTuple.latitude)
         LongitudeFrom.text = String(describing: fromTowerTuple.longitude)
         rotatePointer(xyTuple: fromTowerTuple)
+        print("current angle is " + String(currentAngle))
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        let uncorrected = correction
+        correction = newHeading.magneticHeading * (Double.pi / 180.0)
+        Pointer.transform = Pointer.transform.rotated(by: CGFloat(correction - uncorrected))
     }
     
     func getLatitudeAndLongitudeFromTower() -> (latitude: Double, longitude: Double)
@@ -80,7 +90,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let x = xyTuple.longitude
         let y = xyTuple.latitude
         let hypo = sqrt(pow(x, 2.0) + pow(y, 2.0))
-        let radianRotation : Double
+        var radianRotation : Double
         if x < 0 && y < 0 {
             radianRotation = acos(-x / hypo) + Double.pi
         } else if x < 0
@@ -90,6 +100,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         {
             radianRotation = asin(y / hypo)
         }
+        if radianRotation < 0.0
+        {
+            radianRotation = Double.pi * 2.0 + radianRotation
+        }
+        radianRotation = radianRotation - correction
         let toRotateBy = radianRotation - currentAngle
         Pointer.transform = Pointer.transform.rotated(by: CGFloat(toRotateBy))
         currentAngle = radianRotation

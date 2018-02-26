@@ -60,7 +60,6 @@
                     <connections>
                         <outlet property="LatitudeFrom" destination="KGP-zd-m8s" id="od1-K4-HUM"/>
                         <outlet property="LongitudeFrom" destination="JqG-dT-qSx" id="PQ7-p5-pnR"/>
-                        <outlet property="Tower" destination="Ih6-ep-kkc" id="fZN-5w-aOA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

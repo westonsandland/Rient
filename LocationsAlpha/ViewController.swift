@@ -12,10 +12,9 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     let locationObj = CLLocationManager()
-    @IBOutlet weak var Tower: UILabel!
     @IBOutlet weak var LatitudeFrom: UILabel!
     @IBOutlet weak var LongitudeFrom: UILabel!
-
+    var currentAngle: Double = 0
     func enableLocationServices() {
         locationObj.delegate = self
 
@@ -27,7 +26,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             
         case .restricted, .denied:
             // Disable location features
-            Tower.text = "location services are disabled"
+            //Tower.text = "location services are disabled"
             break
             
         case .authorizedWhenInUse, .authorizedAlways:
@@ -42,7 +41,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                          didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
         case .restricted, .denied:
-            Tower.text = "location services are disabled"
+            //Tower.text = "location services are disabled"
             break
             
         case .authorizedWhenInUse:
@@ -58,6 +57,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let fromTowerTuple = getLatitudeAndLongitudeFromTower()
         LatitudeFrom.text = String(describing: fromTowerTuple.latitude)
         LongitudeFrom.text = String(describing: fromTowerTuple.longitude)
+        rotatePointer(xyTuple: fromTowerTuple)
     }
     
     func getLatitudeAndLongitudeFromTower() -> (latitude: Double, longitude: Double)
@@ -73,11 +73,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 LocationConstants.Coordinates.towerLongitude - currentLongitude)
     }
     
+    func rotatePointer(xyTuple: (latitude: Double, longitude: Double))
+    {
+        let x = xyTuple.longitude
+        let y = xyTuple.latitude
+        let hypo = sqrt(pow(x, 2.0) + pow(y, 2.0))
+        let radianRotation = asin((y/x) / hypo)
+    }
+    
     func setRelativePosition()
     {
-        Tower.text = String(describing: locationObj.location?.coordinate.latitude)
-        Tower.text?.append(String(describing: locationObj.location?.coordinate.longitude))
-        Tower.frame.origin = CGPoint(x: 0.0, y: 0.0)
+        //Tower.text = String(describing: locationObj.location?.coordinate.latitude)
+        //Tower.text?.append(String(describing: locationObj.location?.coordinate.longitude))
+        //Tower.frame.origin = CGPoint(x: 0.0, y: 0.0)
     }
     
     override func viewDidLoad() {
@@ -86,8 +94,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         LatitudeFrom.adjustsFontSizeToFitWidth = true
         LongitudeFrom.adjustsFontSizeToFitWidth = true
         enableLocationServices()
-        print(Tower.frame.origin.x)
-        print(Tower.frame.origin.y)
+        //print(Tower.frame.origin.x)
+        //print(Tower.frame.origin.y)
         // Tower.frame.origin = CGPoint(x: <#T##Int#>, y: <#T##Int#>)
         // Do any additional setup after loading the view, typically from a nib.
     }

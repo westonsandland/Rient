@@ -85,7 +85,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         return (LocationConstants.Coordinates.towerLatitude - currentLatitude,
                 LocationConstants.Coordinates.towerLongitude - currentLongitude)
     }
-    
+    /*
+     
+     googleUrl = "https://cse.google.com/cse/publicurl?cx=XXXXXXXXX:XXXXXXXXXX"
+     guard url = NSURL(string: googleUrl) else { return }
+     NSURLSession.sharedSession().dataTaskWithURL(url) {
+     (data, response, error) in
+     // deal with error etc accordingly
+     }
+
+    */
     func rotatePointer(xyTuple: (latitude: Double, longitude: Double))
     {
         let x = xyTuple.longitude

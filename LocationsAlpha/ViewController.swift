@@ -90,8 +90,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         {
             radianRotation = asin(y / hypo)
         }
-        Pointer.transform = Pointer.transform.rotated(by: CGFloat(radianRotation))
-        //rotate object by
+        let toRotateBy = radianRotation - currentAngle
+        Pointer.transform = Pointer.transform.rotated(by: CGFloat(toRotateBy))
+        currentAngle = radianRotation
     }
     
     func setRelativePosition()

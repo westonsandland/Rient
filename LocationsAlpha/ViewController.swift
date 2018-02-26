@@ -69,7 +69,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         let uncorrected = correction
         correction = newHeading.magneticHeading * (Double.pi / 180.0)
-        Pointer.transform = Pointer.transform.rotated(by: CGFloat(correction - uncorrected))
+        currentAngle = currentAngle - (correction - uncorrected)
+        Pointer.transform = Pointer.transform.rotated(by: CGFloat((correction - uncorrected) * -1.0))
     }
     
     func getLatitudeAndLongitudeFromTower() -> (latitude: Double, longitude: Double)
@@ -106,7 +107,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
         radianRotation = radianRotation - correction
         let toRotateBy = radianRotation - currentAngle
-        Pointer.transform = Pointer.transform.rotated(by: CGFloat(toRotateBy))
+        //Pointer.transform = Pointer.transform.rotated(by: CGFloat(Double.pi/2.0))
+        Pointer.transform = Pointer.transform.rotated(by: CGFloat(toRotateBy * -1.0))
         currentAngle = radianRotation
     }
     

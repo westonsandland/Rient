@@ -16,6 +16,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var LongitudeFrom: UILabel!
     @IBOutlet weak var Pointer: UIImageView!
     
+    var destinationEntry: String = ""
     var currentAngle: Double = 0
     var correction: Double = 0
     
@@ -134,6 +135,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         LatitudeFrom.adjustsFontSizeToFitWidth = true
         LongitudeFrom.adjustsFontSizeToFitWidth = true
         enableLocationServices()
+        print(destinationEntry)
         //print(Tower.frame.origin.x)
         //print(Tower.frame.origin.y)
         // Tower.frame.origin = CGPoint(x: <#T##Int#>, y: <#T##Int#>)

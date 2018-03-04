@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uTM-M0-aCo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -102,9 +102,6 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="DestinationExit:" destination="aE1-xD-fWu" eventType="editingDidEnd" id="dMc-EA-wVY"/>
-                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -113,11 +110,10 @@
                     <navigationItem key="navigationItem" id="eaH-ms-h4s"/>
                     <connections>
                         <outlet property="DestinationField" destination="QcI-SG-XBT" id="mJw-6n-3jD"/>
-                        <segue destination="BYZ-38-t0r" kind="show" id="iuN-ab-D6A"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="DestinationEntered" id="fIR-KS-Pmo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6GP-lc-FB2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="aE1-xD-fWu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-828" y="117"/>
         </scene>

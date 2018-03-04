@@ -8,16 +8,18 @@
 
 import UIKit
 
-class IntroViewController: UIViewController {
+class IntroViewController: UIViewController, UITextFieldDelegate {
 
     var destText : String = ""
     @IBOutlet weak var DestinationField: UITextField!
-    @IBAction func DestinationExit(_ sender: Any) {
-        destText = DestinationField.text!
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! ViewController
+        vc.destinationEntry = DestinationField.text!
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        DestinationField.delegate = self
         // Do any additional setup after loading the view.
     }
 
@@ -26,7 +28,14 @@ class IntroViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        performSegue(withIdentifier: "DestinationEntered", sender: self)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
     /*
     // MARK: - Navigation
 

@@ -11,15 +11,21 @@ import UIKit
 class IntroViewController: UIViewController, UITextFieldDelegate {
 
     var destText : String = ""
+    var destLat : Double = 0.0
+    var destLong : Double = 0.0
     @IBOutlet weak var DestinationField: UITextField!
+    @IBOutlet weak var ErrorLabel: UILabel!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ViewController
-        vc.destinationEntry = DestinationField.text!
+        //vc.destinationEntry = DestinationField.text!
+        vc.destinationLongitude = destLong
+        vc.destinationLatitude = destLat
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         DestinationField.delegate = self
+        disableErrorText()
         // Do any additional setup after loading the view.
     }
 
@@ -29,8 +35,19 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        var validLocation : BooleanLiteralType = true
-        var urlString: String = textField.text!
+        getWebData(enteredText: textField.text!)
+        if(destLat != 0.0 && destLong != 0.0){
+            disableErrorText()
+            self.performSegue(withIdentifier: "DestinationEntered", sender: self)
+        }else
+        {
+            enableErrorText()
+        }
+    }
+    
+    func getWebData(enteredText: String)
+    {
+        var urlString: String = enteredText
         urlString = urlString.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "https://www.google.com/search?q=address+of+\(urlString)")
         if url != nil {
@@ -38,32 +55,49 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                 print(data!)
                 if error == nil {
                     let urlContent = NSString(data: data!, encoding: String.Encoding.ascii.rawValue) as NSString!
-                    let rawData = urlContent?.components(separatedBy: ";ll=")
-                    if(rawData != nil)
-                    {
-                        let lessRaw = rawData![1].components(separatedBy: "&amp;")[0]
-                        if(lessRaw != nil)
-                        {
-                            print(lessRaw)
-                        } else
-                        {
-                            validLocation = false
+                    if (urlContent?.range(of:";ll=") != nil && urlContent!.components(separatedBy: ";ll=").count > 1) {
+                        let rawData = urlContent?.components(separatedBy: ";ll=")
+                        if (rawData?[1].range(of: "&amp;") != nil) {
+                            let lessRaw = (rawData?[1].components(separatedBy: "&amp;")[0])
+                            if(lessRaw != nil)
+                            {
+                                if(lessRaw!.components(separatedBy: ",").count > 1){
+                                    let leastRaw = lessRaw?.components(separatedBy: ",")
+                                    if Double(leastRaw![0]) != nil {
+                                        if Double(leastRaw![1]) != nil {
+                                            self.destLat = Double(leastRaw![0])!
+                                            self.destLong = Double(leastRaw![1])!
+                                            self.saveWebData(LLTuple: (self.destLat, self.destLong))
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    } else
-                    {
-                        validLocation = false
                     }
+                }else
+                {
+                    print("error: \(String(describing: error))")
+                    self.enableErrorText()
                 }
             })
             task.resume()
-        } else
-        {
-            validLocation = false
         }
-        if(validLocation)
-        {
-            performSegue(withIdentifier: "DestinationEntered", sender: self)
-        }
+    }
+    
+    func saveWebData(LLTuple: (latitude: Double, longitude: Double))
+    {
+        destLat = LLTuple.latitude
+        destLong = LLTuple.longitude
+    }
+    
+    func enableErrorText()
+    {
+        ErrorLabel.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+    }
+    
+    func disableErrorText()
+    {
+        ErrorLabel.textColor = UIColor(white: 1, alpha: 0)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -18,6 +18,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     @IBOutlet weak var Pointer: UIImageView!
     
     var destinationEntry: String = "none"
+    var destinationLatitude: Double = 0.0
+    var destinationLongitude: Double = 0.0
     var currentAngle: Double = 0
     var correction: Double = 0
     var fullAddress: [String] = [""]
@@ -83,10 +85,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         let currentLongitude : Double = (locationObj.location?.coordinate.longitude)!
         print("current latitude is "+String(currentLatitude))
         print("current longitude is "+String(currentLongitude))
-        print("UT latitude is "+String(LocationConstants.Coordinates.towerLatitude))
-        print("UT longitude is "+String(LocationConstants.Coordinates.towerLongitude))
-        return (LocationConstants.Coordinates.towerLatitude - currentLatitude,
-                LocationConstants.Coordinates.towerLongitude - currentLongitude)
+        print("UT latitude is "+String(destinationLatitude))
+        print("UT longitude is "+String(destinationLongitude))
+        return (destinationLatitude - currentLatitude,
+                destinationLongitude - currentLongitude)
     }
     
     func rotatePointer(xyTuple: (latitude: Double, longitude: Double))

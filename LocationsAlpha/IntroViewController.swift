@@ -29,7 +29,41 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        performSegue(withIdentifier: "DestinationEntered", sender: self)
+        var validLocation : BooleanLiteralType = true
+        var urlString: String = textField.text!
+        urlString = urlString.replacingOccurrences(of: " ", with: "+")
+        let url = URL(string: "https://www.google.com/search?q=address+of+\(urlString)")
+        if url != nil {
+            let task = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) -> Void in
+                print(data!)
+                if error == nil {
+                    let urlContent = NSString(data: data!, encoding: String.Encoding.ascii.rawValue) as NSString!
+                    let rawData = urlContent?.components(separatedBy: ";ll=")
+                    if(rawData != nil)
+                    {
+                        let lessRaw = rawData![1].components(separatedBy: "&amp;")[0]
+                        if(lessRaw != nil)
+                        {
+                            print(lessRaw)
+                        } else
+                        {
+                            validLocation = false
+                        }
+                    } else
+                    {
+                        validLocation = false
+                    }
+                }
+            })
+            task.resume()
+        } else
+        {
+            validLocation = false
+        }
+        if(validLocation)
+        {
+            performSegue(withIdentifier: "DestinationEntered", sender: self)
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

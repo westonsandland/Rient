@@ -13,7 +13,6 @@ import MapKit
 class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDelegate {
 
     let locationObj = CLLocationManager()
-    let completer = MKLocalSearchCompleter()
     @IBOutlet weak var LatitudeFrom: UILabel!
     @IBOutlet weak var LongitudeFrom: UILabel!
     @IBOutlet weak var Pointer: UIImageView!
@@ -82,7 +81,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     {
         let currentLatitude : Double = (locationObj.location?.coordinate.latitude)!
         let currentLongitude : Double = (locationObj.location?.coordinate.longitude)!
-        print("method ran")
         print("current latitude is "+String(currentLatitude))
         print("current longitude is "+String(currentLongitude))
         print("UT latitude is "+String(LocationConstants.Coordinates.towerLatitude))
@@ -90,16 +88,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         return (LocationConstants.Coordinates.towerLatitude - currentLatitude,
                 LocationConstants.Coordinates.towerLongitude - currentLongitude)
     }
-    /*
-     
-     googleUrl = "https://cse.google.com/cse/publicurl?cx=XXXXXXXXX:XXXXXXXXXX"
-     guard url = NSURL(string: googleUrl) else { return }
-     NSURLSession.sharedSession().dataTaskWithURL(url) {
-     (data, response, error) in
-     // deal with error etc accordingly
-     }
-
-    */
+    
     func rotatePointer(xyTuple: (latitude: Double, longitude: Double))
     {
         let x = xyTuple.longitude
@@ -124,6 +113,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         //Pointer.transform = Pointer.transform.rotated(by: CGFloat(Double.pi/2.0))
         Pointer.transform = Pointer.transform.rotated(by: CGFloat(toRotateBy * -1.0))
         currentAngle = radianRotation
+        //print("webdata is "+(webData?.base64EncodedString())!)
     }
     
     func setRelativePosition()
@@ -140,24 +130,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         LongitudeFrom.adjustsFontSizeToFitWidth = true
         enableLocationServices()
         print(destinationEntry)
-        if(destinationEntry != "none")
-        {
-            var urlString: String = destinationEntry
-            urlString = urlString.replacingOccurrences(of: " ", with: "+")
-            let url = URL(string: "http://www.google.com/search?q=address+of+\(urlString)")
-            print(url!)
-            if(url != nil)
-            {
-                webData = Data()
-                let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
-                    print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
-                }
-                task.resume()
-                print()
-            }
-            //self.webView.loadRequest(request)
-            
-        }
+        
         //print(Tower.frame.origin.x)
         //print(Tower.frame.origin.y)
         // Tower.frame.origin = CGPoint(x: <#T##Int#>, y: <#T##Int#>)
@@ -165,7 +138,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     }
     
     // delegate methods
-    
+    /*
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,
                     completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
         guard let response = response as? HTTPURLResponse,
@@ -199,7 +172,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
             }
         }
     }
-    
+    */
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

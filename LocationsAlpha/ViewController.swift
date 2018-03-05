@@ -8,17 +8,21 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDelegate {
 
     let locationObj = CLLocationManager()
+    let completer = MKLocalSearchCompleter()
     @IBOutlet weak var LatitudeFrom: UILabel!
     @IBOutlet weak var LongitudeFrom: UILabel!
     @IBOutlet weak var Pointer: UIImageView!
     
-    var destinationEntry: String = ""
+    var destinationEntry: String = "none"
     var currentAngle: Double = 0
     var correction: Double = 0
+    var fullAddress: [String] = [""]
+    var webData: Data?
     
     func enableLocationServices() {
         locationObj.delegate = self
@@ -136,10 +140,64 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         LongitudeFrom.adjustsFontSizeToFitWidth = true
         enableLocationServices()
         print(destinationEntry)
+        if(destinationEntry != "none")
+        {
+            var urlString: String = destinationEntry
+            urlString = urlString.replacingOccurrences(of: " ", with: "+")
+            let url = URL(string: "http://www.google.com/search?q=address+of+\(urlString)")
+            print(url!)
+            if(url != nil)
+            {
+                webData = Data()
+                let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+                    print(NSString(data: data!, encoding: String.Encoding.utf8.rawValue))
+                }
+                task.resume()
+                print()
+            }
+            //self.webView.loadRequest(request)
+            
+        }
         //print(Tower.frame.origin.x)
         //print(Tower.frame.origin.y)
         // Tower.frame.origin = CGPoint(x: <#T##Int#>, y: <#T##Int#>)
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    // delegate methods
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,
+                    completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        guard let response = response as? HTTPURLResponse,
+            (200...299).contains(response.statusCode),
+            let mimeType = response.mimeType,
+            mimeType == "text/html" else {
+                completionHandler(.cancel)
+                return
+        }
+        completionHandler(.allow)
+    }
+    
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        self.webData?.append(data)
+    }
+    
+    private lazy var session: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.waitsForConnectivity = true
+        return URLSession(configuration: configuration,
+                          delegate: self, delegateQueue: nil)
+    }()
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        DispatchQueue.main.async {
+            if let error = error {
+                print("bug happened")
+            } else if let receivedData = self.webData,
+                let string = String(data: receivedData, encoding: .utf8) {
+                print("string is "+string)
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

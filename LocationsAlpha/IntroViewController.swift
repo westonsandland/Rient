@@ -13,12 +13,13 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     var destText : String = ""
     var destLat : Double = 0.0
     var destLong : Double = 0.0
+    var toContinue : Bool = false
     @IBOutlet weak var DestinationField: UITextField!
     @IBOutlet weak var ErrorLabel: UILabel!
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ViewController
-        //vc.destinationEntry = DestinationField.text!
+        vc.destinationEntry = DestinationField.text!
         vc.destinationLongitude = destLong
         vc.destinationLatitude = destLat
     }
@@ -36,6 +37,8 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         getWebData(enteredText: textField.text!)
+        while(!toContinue){}
+        toContinue = false
         if(destLat != 0.0 && destLong != 0.0){
             disableErrorText()
             self.performSegue(withIdentifier: "DestinationEntered", sender: self)
@@ -68,6 +71,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                                             self.destLat = Double(leastRaw![0])!
                                             self.destLong = Double(leastRaw![1])!
                                             self.saveWebData(LLTuple: (self.destLat, self.destLong))
+                                            self.processFinished()
                                         }
                                     }
                                 }
@@ -98,6 +102,11 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     func disableErrorText()
     {
         ErrorLabel.textColor = UIColor(white: 1, alpha: 0)
+    }
+    
+    func processFinished()
+    {
+        toContinue = true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

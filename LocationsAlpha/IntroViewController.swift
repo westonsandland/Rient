@@ -11,8 +11,8 @@ import UIKit
 class IntroViewController: UIViewController, UITextFieldDelegate {
 
     var destText : String = ""
-    var destLat : Double = 0.0
-    var destLong : Double = 0.0
+    var destLat : Double = 1000.0
+    var destLong : Double = 1000.0
     var toContinue : Bool = false
     @IBOutlet weak var DestinationField: UITextField!
     @IBOutlet weak var ErrorLabel: UILabel!
@@ -29,7 +29,13 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
         disableErrorText()
         // Do any additional setup after loading the view.
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        destLat = 1000.0
+        destLong = 1000.0
+        disableErrorText()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -39,7 +45,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
         getWebData(enteredText: textField.text!)
         while(!toContinue){}
         toContinue = false
-        if(destLat != 0.0 && destLong != 0.0){
+        if(destLat != 1000.0 && destLong != 1000.0){
             disableErrorText()
             self.performSegue(withIdentifier: "DestinationEntered", sender: self)
         }else
@@ -50,12 +56,13 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     
     func getWebData(enteredText: String)
     {
+        print(destLat)
+        print(destLong)
         var urlString: String = enteredText
         urlString = urlString.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "https://www.google.com/search?q=address+of+\(urlString)")
         if url != nil {
             let task = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) -> Void in
-                print(data!)
                 if error == nil {
                     let urlContent = NSString(data: data!, encoding: String.Encoding.ascii.rawValue) as NSString!
                     if (urlContent?.range(of:";ll=") != nil && urlContent!.components(separatedBy: ";ll=").count > 1) {
@@ -68,9 +75,9 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                                     let leastRaw = lessRaw?.components(separatedBy: ",")
                                     if Double(leastRaw![0]) != nil {
                                         if Double(leastRaw![1]) != nil {
-                                            self.destLat = Double(leastRaw![0])!
-                                            self.destLong = Double(leastRaw![1])!
-                                            self.saveWebData(LLTuple: (self.destLat, self.destLong))
+                                            let thisLat = Double(leastRaw![0])!
+                                            let thisLong = Double(leastRaw![1])!
+                                            self.saveWebData(LLTuple: (thisLat, thisLong))
                                             self.processFinished()
                                         }
                                     }
@@ -78,10 +85,13 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                             }
                         }
                     }
+                    self.processFinished()
                 }else
                 {
+                    print("we got un error")
                     print("error: \(String(describing: error))")
                     self.enableErrorText()
+                    self.processFinished()
                 }
             })
             task.resume()

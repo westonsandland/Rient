@@ -70,16 +70,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         LatitudeFrom.text = String(describing: fromTowerTuple.latitude)
         LongitudeFrom.text = String(describing: fromTowerTuple.longitude)
         let targetLocation = CLLocation(latitude: destinationLatitude, longitude: destinationLongitude)
-        let myLocation = CLLocation(latitude: locationObj.location?.coordinate.latitude, longitude: locationObj.location?.coordinate.longitude)
-        print("TARGET LAT AND LONG IS:")
-        print(targetLocation.coordinate.latitude)
-        print(targetLocation.coordinate.longitude)
-        print("MY LAT AND LONG IS:")
-        print(myLocation.coordinate.latitude)
-        print(myLocation.coordinate.longitude)
+        let myLocation = CLLocation(latitude: (locationObj.location?.coordinate.latitude)!, longitude: (locationObj.location?.coordinate.longitude)!)
+        //print("TARGET LAT AND LONG IS:")
+        //print(targetLocation.coordinate.latitude)
+        //print(targetLocation.coordinate.longitude)
+        //print("MY LAT AND LONG IS:")
+        //print(myLocation.coordinate.latitude)
+        //print(myLocation.coordinate.longitude)
         DistanceFrom.text = String(round(targetLocation.distance(from: myLocation) * 0.000621371 * 100)/100) + "miles away"
         rotatePointer(xyTuple: fromTowerTuple)
-        print("current angle is " + String(currentAngle))
+        //print("current angle is " + String(currentAngle))
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
@@ -93,10 +93,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     {
         let currentLatitude : Double = (locationObj.location?.coordinate.latitude)!
         let currentLongitude : Double = (locationObj.location?.coordinate.longitude)!
-        print("current latitude is "+String(currentLatitude))
-        print("current longitude is "+String(currentLongitude))
-        print("\(destinationEntry) latitude is "+String(destinationLatitude))
-        print("\(destinationEntry) longitude is "+String(destinationLongitude))
+        //print("current latitude is "+String(currentLatitude))
+        //print("current longitude is "+String(currentLongitude))
+        //print("\(destinationEntry) latitude is "+String(destinationLatitude))
+        //print("\(destinationEntry) longitude is "+String(destinationLongitude))
         return (destinationLatitude - currentLatitude,
                 destinationLongitude - currentLongitude)
     }

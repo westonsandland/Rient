@@ -18,6 +18,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     @IBOutlet weak var Pointer: UIImageView!
     @IBOutlet weak var DistanceFrom: UILabel!
     @IBOutlet weak var DestinationLabel: UILabel!
+    @IBOutlet weak var finishcircle: UIImageView!
     
     var destinationEntry: String = "none"
     var destinationLatitude: Double = 0.0

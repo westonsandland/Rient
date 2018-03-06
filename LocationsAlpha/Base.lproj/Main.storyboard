@@ -89,7 +89,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circleclear" translatesAutoresizingMaskIntoConstraints="NO" id="NZ9-CY-mot">
-                                <rect key="frame" x="128" y="454" width="63" height="63"/>
+                                <rect key="frame" x="170" y="349" width="34" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -102,6 +102,7 @@
                         <outlet property="LatitudeFrom" destination="KGP-zd-m8s" id="od1-K4-HUM"/>
                         <outlet property="LongitudeFrom" destination="JqG-dT-qSx" id="PQ7-p5-pnR"/>
                         <outlet property="Pointer" destination="Nxr-lD-OgA" id="ucY-8e-kBz"/>
+                        <outlet property="finishcircle" destination="NZ9-CY-mot" id="p3b-9A-UAY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

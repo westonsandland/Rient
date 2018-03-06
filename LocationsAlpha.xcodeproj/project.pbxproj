@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		DD5EFECC2044AD820095C6B3 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5EFECB2044AD820095C6B3 /* IntroViewController.swift */; };
-		DDAC9D0F2043569900563893 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAC9D0E2043569900563893 /* LocationManager.swift */; };
 		DDAC9D112043599F00563893 /* LocationConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAC9D102043599F00563893 /* LocationConstants.swift */; };
 		DDE87E71203F83A700788BB4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE87E70203F83A700788BB4 /* AppDelegate.swift */; };
 		DDE87E73203F83A700788BB4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE87E72203F83A700788BB4 /* ViewController.swift */; };
@@ -38,7 +37,6 @@
 
 /* Begin PBXFileReference section */
 		DD5EFECB2044AD820095C6B3 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		DDAC9D0E2043569900563893 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		DDAC9D102043599F00563893 /* LocationConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationConstants.swift; sourceTree = "<group>"; };
 		DDE87E6D203F83A700788BB4 /* LocationsAlpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationsAlpha.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDE87E70203F83A700788BB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				DD5EFECB2044AD820095C6B3 /* IntroViewController.swift */,
-				DDAC9D0E2043569900563893 /* LocationManager.swift */,
 				DDE87E70203F83A700788BB4 /* AppDelegate.swift */,
 				DDE87E72203F83A700788BB4 /* ViewController.swift */,
 				DDAC9D102043599F00563893 /* LocationConstants.swift */,
@@ -272,7 +269,6 @@
 				DDAC9D112043599F00563893 /* LocationConstants.swift in Sources */,
 				DDE87E73203F83A700788BB4 /* ViewController.swift in Sources */,
 				DDE87E71203F83A700788BB4 /* AppDelegate.swift in Sources */,
-				DDAC9D0F2043569900563893 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

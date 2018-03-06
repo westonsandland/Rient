@@ -136,6 +136,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         //Tower.frame.origin = CGPoint(x: 0.0, y: 0.0)
     }
     
+    func animateHere()
+    {
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //locationManager.requestAlwaysAuthorization()

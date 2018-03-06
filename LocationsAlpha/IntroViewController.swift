@@ -111,7 +111,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     
     func enableErrorText()
     {
-        ErrorLabel.textColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        ErrorLabel.textColor = #colorLiteral(red: 0.80303514, green: 0.2736586928, blue: 0.2775121331, alpha: 1)
     }
     
     func disableErrorText()

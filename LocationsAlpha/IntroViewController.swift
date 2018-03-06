@@ -7,15 +7,32 @@
 //
 
 import UIKit
+import CoreLocation
+
+//protocol enableLocation
+//{
+//    func enableLocationServices()
+//}
 
 class IntroViewController: UIViewController, UITextFieldDelegate {
 
+    //var locationDelegate: enableLocation?
     var destText : String = ""
     var destLat : Double = 1000.0
     var destLong : Double = 1000.0
     var toContinue : Bool = false
+    var locationSelected : Int8 = -1
+    var locationEnabled : Bool = false
     @IBOutlet weak var DestinationField: UITextField!
     @IBOutlet weak var ErrorLabel: UILabel!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
+     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ViewController
@@ -31,6 +48,13 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        locationSelected = ViewController().enableLocationServices()
+        if(locationSelected == 1){
+            locationEnabled = true
+        }else
+        {
+            locationEnabled = false
+        }
         destLat = 1000.0
         destLong = 1000.0
         disableErrorText()
@@ -46,7 +70,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
         getWebData(enteredText: textField.text!)
         while(!toContinue){}
         toContinue = false
-        if(destLat != 1000.0 && destLong != 1000.0){
+        if(destLat != 1000.0 && destLong != 1000.0 && locationEnabled){
             disableErrorText()
             self.performSegue(withIdentifier: "DestinationEntered", sender: self)
         }else

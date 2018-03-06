@@ -10,6 +10,10 @@ import UIKit
 import CoreLocation
 import MapKit
 
+
+//extension ViewController: enableLocation {
+//}
+
 class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDelegate {
 
     let locationObj = CLLocationManager()
@@ -18,7 +22,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     @IBOutlet weak var Pointer: UIImageView!
     @IBOutlet weak var DistanceFrom: UILabel!
     @IBOutlet weak var DestinationLabel: UILabel!
-    @IBOutlet weak var finishcircle: UIImageView!
+    @IBOutlet weak var blackout: UIImageView!
     
     var destinationEntry: String = "none"
     var destinationLatitude: Double = 0.0
@@ -28,27 +32,40 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     var fullAddress: [String] = [""]
     var webData: Data?
     
-    func enableLocationServices() {
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    func enableLocationServices() -> Int8 {
+        var returner: Int8 = -1
         locationObj.delegate = self
-
-        switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            // Request when-in-use authorization initially
-            locationObj.requestWhenInUseAuthorization()
-            break
-            
-        case .restricted, .denied:
-            // Disable location features
-            //Tower.text = "location services are disabled"
-            break
-            
-        case .authorizedWhenInUse, .authorizedAlways:
-            // Enable basic location features
-            locationObj.startUpdatingLocation()
-            locationObj.startUpdatingHeading()
-            setRelativePosition()
-            break
+        while(returner == -1){
+            switch CLLocationManager.authorizationStatus() {
+            case .notDetermined:
+                // Request when-in-use authorization initially
+                locationObj.requestWhenInUseAuthorization()
+                break
+                
+            case .restricted, .denied:
+                // Disable location features
+                //Tower.text = "location services are disabled"
+                returner = 0
+                break
+                
+            case .authorizedWhenInUse, .authorizedAlways:
+                // Enable basic location features
+                locationObj.startUpdatingLocation()
+                locationObj.startUpdatingHeading()
+                setRelativePosition()
+                returner = 1
+                break
+            }
         }
+        return returner
     }
     
     func locationManager(_ manager: CLLocationManager,
@@ -145,13 +162,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        blackout.alpha = 0.0
         //locationManager.requestAlwaysAuthorization()
         LatitudeFrom.adjustsFontSizeToFitWidth = true
         LongitudeFrom.adjustsFontSizeToFitWidth = true
         DestinationLabel.text = "Directions to \(destinationEntry)"
-        enableLocationServices()
+        //enableLocationServices()
         print(destinationEntry)
-        
+        self.navigationController?.isNavigationBarHidden = false
+        enableLocationServices()
         //print(Tower.frame.origin.x)
         //print(Tower.frame.origin.y)
         // Tower.frame.origin = CGPoint(x: <#T##Int#>, y: <#T##Int#>)

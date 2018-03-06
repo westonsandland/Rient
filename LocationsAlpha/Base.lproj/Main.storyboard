@@ -22,6 +22,7 @@
         <scene sceneID="6eG-wa-fl4">
             <objects>
                 <navigationController id="uTM-M0-aCo" sceneMemberID="viewController">
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QFA-iD-Rtv">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -88,8 +89,8 @@
                                 <color key="textColor" red="0.80392156859999997" green="0.80392156859999997" blue="0.80392156859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circleclear" translatesAutoresizingMaskIntoConstraints="NO" id="NZ9-CY-mot">
-                                <rect key="frame" x="170" y="349" width="34" height="34"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="blackout" translatesAutoresizingMaskIntoConstraints="NO" id="q06-XY-0OC">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -102,7 +103,7 @@
                         <outlet property="LatitudeFrom" destination="KGP-zd-m8s" id="od1-K4-HUM"/>
                         <outlet property="LongitudeFrom" destination="JqG-dT-qSx" id="PQ7-p5-pnR"/>
                         <outlet property="Pointer" destination="Nxr-lD-OgA" id="ucY-8e-kBz"/>
-                        <outlet property="finishcircle" destination="NZ9-CY-mot" id="p3b-9A-UAY"/>
+                        <outlet property="blackout" destination="q06-XY-0OC" id="KfU-Ou-pSJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -171,7 +172,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="circleclear" width="1024" height="1024"/>
+        <image name="blackout" width="1024" height="1024"/>
         <image name="coloredpointer" width="1024" height="1024"/>
     </resources>
 </document>

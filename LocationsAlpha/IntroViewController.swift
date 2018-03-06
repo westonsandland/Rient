@@ -34,6 +34,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
         destLat = 1000.0
         destLong = 1000.0
         disableErrorText()
+        toContinue = false
     }
     
     override func didReceiveMemoryWarning() {

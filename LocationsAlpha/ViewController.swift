@@ -86,8 +86,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let fromTowerTuple = getLatitudeAndLongitudeFromTower()
-        LatitudeFrom.text = String(describing: fromTowerTuple.latitude)
-        LongitudeFrom.text = String(describing: fromTowerTuple.longitude)
+        LatitudeFrom.text = String(describing: round(fromTowerTuple.latitude*100000)/100000)
+        LongitudeFrom.text = String(describing: round(fromTowerTuple.longitude*100000)/100000)
         let targetLocation = CLLocation(latitude: destinationLatitude, longitude: destinationLongitude)
         let myLocation = CLLocation(latitude: (locationObj.location?.coordinate.latitude)!, longitude: (locationObj.location?.coordinate.longitude)!)
         //print("TARGET LAT AND LONG IS:")
@@ -169,14 +169,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         DestinationLabel.text = "Directions to \(destinationEntry)"
         //enableLocationServices()
         print(destinationEntry)
-        self.navigationController?.isNavigationBarHidden = false
-        enableLocationServices()
-        //print(Tower.frame.origin.x)
-        //print(Tower.frame.origin.y)
-        // Tower.frame.origin = CGPoint(x: <#T##Int#>, y: <#T##Int#>)
+        //constraints start here
+        let widthMinusPointer = systemMinimumLayoutMargins.trailing - #imageLiteral(resourceName: "Pointer").size.width
+        let distanceFromLeft = widthMinusPointer / (1.7)
+        let distanceFromRight = widthMinusPointer - distanceFromLeft
+        let leftConstraint = NSLayoutConstraint(item: #imageLiteral(resourceName: "Pointer"), attribute: .leading, relatedBy: .equal, toItem: systemMinimumLayoutMargins, attribute: .leading, multiplier: 1.0, constant: distanceFromLeft)
+        //let rightConstraint = NSLayoutConstraint(item: #imageLiteral(resourceName: "Pointer"), attribute: .trailing, relatedBy: .equal, toItem: systemMinimumLayoutMargins, attribute: .trailing, multiplier: 1.0, constant: distanceFromRight)
+        //NSLayoutConstraint.activate([leftConstraint, rightConstraint])
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    //override func updateViewConstraints() {
+        /**/
+    //}
     // delegate methods
     /*
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,

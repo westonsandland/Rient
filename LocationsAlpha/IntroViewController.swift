@@ -19,7 +19,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc = segue.destination as! ViewController
-        vc.destinationEntry = DestinationField.text!
+        vc.destinationEntry = destText
         vc.destinationLongitude = destLong
         vc.destinationLatitude = destLat
     }
@@ -57,8 +57,6 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     
     func getWebData(enteredText: String)
     {
-        print(destLat)
-        print(destLong)
         var urlString: String = enteredText
         urlString = urlString.replacingOccurrences(of: " ", with: "+")
         let url = URL(string: "https://www.google.com/search?q=address+of+\(urlString)")
@@ -66,11 +64,15 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
             let task = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) -> Void in
                 if error == nil {
                     let urlContent = NSString(data: data!, encoding: String.Encoding.ascii.rawValue) as NSString!
-                    if (urlContent?.range(of:";ll=") != nil && urlContent!.components(separatedBy: ";ll=").count > 1) {
+                    if (urlContent?.range(of:";ll=") != nil && urlContent!.components(separatedBy: ";ll=").count > 1 &&
+                        urlContent?.range(of:"\"_eGc\">") != nil && urlContent!.components(separatedBy: "\"_eGc\">").count > 1) {
                         let rawData = urlContent?.components(separatedBy: ";ll=")
-                        if (rawData?[1].range(of: "&amp;") != nil) {
+                        let rawName = urlContent?.components(separatedBy: "\"_eGc\">")
+                        if (rawData?[1].range(of: "&amp;") != nil &&
+                            rawName?[1].range(of: ",") != nil) {
                             let lessRaw = (rawData?[1].components(separatedBy: "&amp;")[0])
-                            if(lessRaw != nil)
+                            let lessName = (rawName?[1].components(separatedBy: ",")[0])
+                            if(lessRaw != nil && lessName != nil)
                             {
                                 if(lessRaw!.components(separatedBy: ",").count > 1){
                                     let leastRaw = lessRaw?.components(separatedBy: ",")
@@ -78,7 +80,8 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                                         if Double(leastRaw![1]) != nil {
                                             let thisLat = Double(leastRaw![0])!
                                             let thisLong = Double(leastRaw![1])!
-                                            self.saveWebData(LLTuple: (thisLat, thisLong))
+                                            let leastName = lessName?.trimmingCharacters(in: .whitespacesAndNewlines)
+                                            self.saveWebData(LLTuple: (thisLat, thisLong), name: leastName!)
                                             self.processFinished()
                                         }
                                     }
@@ -99,10 +102,11 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func saveWebData(LLTuple: (latitude: Double, longitude: Double))
+    func saveWebData(LLTuple: (latitude: Double, longitude: Double), name: String)
     {
         destLat = LLTuple.latitude
         destLong = LLTuple.longitude
+        destText = name
     }
     
     func enableErrorText()

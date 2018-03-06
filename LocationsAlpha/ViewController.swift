@@ -17,6 +17,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
     @IBOutlet weak var LongitudeFrom: UILabel!
     @IBOutlet weak var Pointer: UIImageView!
     @IBOutlet weak var DistanceFrom: UILabel!
+    @IBOutlet weak var DestinationLabel: UILabel!
     
     var destinationEntry: String = "none"
     var destinationLatitude: Double = 0.0
@@ -77,7 +78,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         //print("MY LAT AND LONG IS:")
         //print(myLocation.coordinate.latitude)
         //print(myLocation.coordinate.longitude)
-        DistanceFrom.text = String(round(targetLocation.distance(from: myLocation) * 0.000621371 * 100)/100) + "miles away"
+        DistanceFrom.text = String(round(targetLocation.distance(from: myLocation) * 0.000621371 * 100)/100) + " miles away"
         rotatePointer(xyTuple: fromTowerTuple)
         //print("current angle is " + String(currentAngle))
     }
@@ -140,6 +141,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, URLSessionDel
         //locationManager.requestAlwaysAuthorization()
         LatitudeFrom.adjustsFontSizeToFitWidth = true
         LongitudeFrom.adjustsFontSizeToFitWidth = true
+        DestinationLabel.text = "Directions to \(destinationEntry)"
         enableLocationServices()
         print(destinationEntry)
         

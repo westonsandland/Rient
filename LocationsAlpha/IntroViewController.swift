@@ -67,19 +67,23 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        getWebData(enteredText: textField.text!)
-        while(!toContinue){}
-        toContinue = false
-        if(destLat != 1000.0 && destLong != 1000.0 && locationEnabled){
-            disableErrorText()
-            self.performSegue(withIdentifier: "DestinationEntered", sender: self)
+        let dispatch = DispatchGroup()
+        let myText = textField.text!
+        dispatch.enter()
+        DispatchQueue.global(qos: .default).async {
+            self.getWebData(enteredText: myText, dispatch: dispatch)
+        }
+        dispatch.wait()
+        if(destLat != 1000.0 && self.destLong != 1000.0 && self.locationEnabled){
+        disableErrorText()
+        performSegue(withIdentifier: "DestinationEntered", sender: self)
         }else
         {
             enableErrorText()
         }
     }
     
-    func getWebData(enteredText: String)
+    func getWebData(enteredText: String, dispatch: DispatchGroup)
     {
         var urlString: String = enteredText
         urlString = urlString.replacingOccurrences(of: " ", with: "+")
@@ -107,19 +111,23 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                                             let leastName = lessName?.trimmingCharacters(in: .whitespacesAndNewlines)
                                             self.saveWebData(LLTuple: (thisLat, thisLong), name: leastName!)
                                             self.processFinished()
+                                            dispatch.leave()
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    self.processFinished()
+                    if(!self.toContinue){
+                        dispatch.leave()
+                    }
                 }else
                 {
                     print("we got un error")
                     print("error: \(String(describing: error))")
                     self.enableBadRequest()
                     self.processFinished()
+                    dispatch.leave()
                 }
             })
             task.resume()

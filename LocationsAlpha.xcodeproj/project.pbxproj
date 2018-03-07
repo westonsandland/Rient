@@ -199,7 +199,7 @@
 				TargetAttributes = {
 					DDE87E6C203F83A700788BB4 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					DDE87E80203F83A700788BB4 = {
 						CreatedOnToolsVersion = 9.2;
@@ -434,12 +434,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4JF9NL3Y97;
+				CODE_SIGN_IDENTITY = "iPhone Developer: westonsandland@gmail.com (33L76N95KL)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26RSS88A8M;
 				INFOPLIST_FILE = LocationsAlpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ludi.rient;
+				PRODUCT_BUNDLE_IDENTIFIER = westonsandland.rient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "ac18575b-c123-48cd-897e-cb257b652ac5";
+				PROVISIONING_PROFILE_SPECIFIER = "Rient App Store Distribution";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -449,12 +453,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4JF9NL3Y97;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Weston Sandland (26RSS88A8M)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = 26RSS88A8M;
 				INFOPLIST_FILE = LocationsAlpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ludi.rient;
+				PRODUCT_BUNDLE_IDENTIFIER = westonsandland.rient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0118bb2f-3260-41fb-962c-7788755b823b";
+				PROVISIONING_PROFILE_SPECIFIER = "Rient App Store Distribution";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

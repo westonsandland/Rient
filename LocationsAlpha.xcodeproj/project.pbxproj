@@ -438,10 +438,10 @@
 				DEVELOPMENT_TEAM = 4JF9NL3Y97;
 				INFOPLIST_FILE = LocationsAlpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = westonsandland.LocationsAlpha;
+				PRODUCT_BUNDLE_IDENTIFIER = ludi.rient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -453,10 +453,10 @@
 				DEVELOPMENT_TEAM = 4JF9NL3Y97;
 				INFOPLIST_FILE = LocationsAlpha/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = westonsandland.LocationsAlpha;
+				PRODUCT_BUNDLE_IDENTIFIER = ludi.rient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

@@ -442,8 +442,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = westonsandland.rient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ac18575b-c123-48cd-897e-cb257b652ac5";
-				PROVISIONING_PROFILE_SPECIFIER = "Rient App Store Distribution";
+				PROVISIONING_PROFILE = "73c4711a-7175-4ac3-831d-26260e57cf2c";
+				PROVISIONING_PROFILE_SPECIFIER = "Rient Distribution";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -461,8 +461,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = westonsandland.rient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0118bb2f-3260-41fb-962c-7788755b823b";
-				PROVISIONING_PROFILE_SPECIFIER = "Rient App Store Distribution";
+				PROVISIONING_PROFILE = "73c4711a-7175-4ac3-831d-26260e57cf2c";
+				PROVISIONING_PROFILE_SPECIFIER = "Rient Distribution";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

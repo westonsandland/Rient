@@ -118,7 +118,7 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
                 {
                     print("we got un error")
                     print("error: \(String(describing: error))")
-                    self.enableErrorText()
+                    self.enableBadRequest()
                     self.processFinished()
                 }
             })
@@ -135,6 +135,13 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
     
     func enableErrorText()
     {
+        ErrorLabel.text = "Invalid Location"
+        ErrorLabel.textColor = #colorLiteral(red: 0.80303514, green: 0.2736586928, blue: 0.2775121331, alpha: 1)
+    }
+    
+    func enableBadRequest()
+    {
+        ErrorLabel.text = "Bad Request"
         ErrorLabel.textColor = #colorLiteral(red: 0.80303514, green: 0.2736586928, blue: 0.2775121331, alpha: 1)
     }
     

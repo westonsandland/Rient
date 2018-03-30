@@ -92,10 +92,12 @@ class IntroViewController: UIViewController, UITextFieldDelegate {
             let task = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) -> Void in
                 if error == nil {
                     let urlContent = NSString(data: data!, encoding: String.Encoding.ascii.rawValue) as NSString!
+                    print(urlContent)
                     if (urlContent?.range(of:";ll=") != nil && urlContent!.components(separatedBy: ";ll=").count > 1 &&
-                        urlContent?.range(of:"\"_eGc\">") != nil && urlContent!.components(separatedBy: "\"_eGc\">").count > 1) {
+                        urlContent?.range(of:"\"PZ6wOb\">") != nil && urlContent!.components(separatedBy: "\"PZ6wOb\">").count > 1) {
                         let rawData = urlContent?.components(separatedBy: ";ll=")
-                        let rawName = urlContent?.components(separatedBy: "\"_eGc\">")
+                        let rawName = urlContent?.components(separatedBy: "\"PZ6wOb\">")
+                        //let rawName = urlContent?.components(separatedBy: "\"_eGc\">")
                         if (rawData?[1].range(of: "&amp;") != nil &&
                             rawName?[1].range(of: ",") != nil) {
                             let lessRaw = (rawData?[1].components(separatedBy: "&amp;")[0])
